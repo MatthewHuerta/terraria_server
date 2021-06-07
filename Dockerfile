@@ -6,21 +6,17 @@ LABEL maintainer="matthewluishuerta@gmail.com"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update > /dev/null
-
-Run apt-get upgrade -y > /dev/null 
+RUN apt-get update > /dev/null 
 
 RUN apt-get -y install apt-utils > /dev/null 
+
+RUN apt-get -y install software-properties-common > /dev/null
 
 RUN apt-get -y install sudo > /dev/null
 
 RUN apt-get -y install wget > /dev/null
 
-RUN apt-get -y install curl > /dev/null
-
 RUN apt-get -y install unzip > /dev/null
-
-# RUN apt-get -y install mono* > /dev/null
 
 RUN apt-get -y install tmux > /dev/null
 
@@ -32,18 +28,16 @@ RUN useradd -m -s /bin/bash Steam \
 
 USER Steam
 
-WORKDIR /home/Steam/
+ENV TERM=xterm
 
-RUN sudo apt-get -y install lib32gcc1 
-
-RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf - > /dev/null
+WORKDIR /home/Steam/ 
 
 RUN wget https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip?1621172068 > /dev/null
 
 RUN unzip terraria-server-1423.zip\?1621172068 > /dev/null
 
-RUN sudo chown -R Steam /home/Steam/  && chmod 755 /home/Steam/steamcmd.sh && chmod +x /home/Steam/1423/Linux/TerrariaServer.bin.x86*
+RUN sudo chown -R Steam /home/Steam/  && chmod +x /home/Steam/1423/Linux/TerrariaServer.bin.x86*
 
 EXPOSE 7777
 
-#ENTRYPOINT ["/home/Steam/steamcmd.sh"]
+#ENTRYPOINT ["/home/Steam/1423/Linux/TerrariaServer.bin.x86"]
