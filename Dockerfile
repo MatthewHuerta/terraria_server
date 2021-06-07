@@ -42,7 +42,7 @@ RUN wget https://terraria.org/system/dedicated_servers/archives/000/000/046/orig
 
 RUN unzip terraria-server-1423.zip\?1621172068 > /dev/null
 
-RUN sudo chown -R Steam /home/Steam/ && chmod 755 steamcmd && chmod +x /home/Steam/1423/Linux/TerrariaServer.bin.x86*
+RUN sudo chown -R Steam /home/Steam/ && chmod 755 /home/Steam/steamcmd && chmod +x /home/Steam/1423/Linux/TerrariaServer.bin.x86*
 
 EXPOSE 7777
 
