@@ -28,7 +28,7 @@ RUN useradd -m -s /bin/bash Steam \
 
         && usermod -aG sudo Steam \
 
-        && echo "steam:password" | chpasswd \
+        && echo "Steam:password" | chpasswd \
 
 USER Steam
 
