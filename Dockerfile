@@ -2,30 +2,30 @@ FROM ubuntu:latest
 
 LABEL maintainer="matthewluishuerta@gmail.com"
 
+ARG server-pass=pss
+
+ENV TERM=xterm
+
 # prevents errors associated with responses such as "apt-get -y"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update > /dev/null
+RUN apt-get update > /dev/null 
 
-RUN apt-get -y install apt-utils software-properties-common sudo  wget unzip tmux > /dev/null \
+RUN apt-get -y install apt-utils software-properties-common sudo wget unzip tmux > /dev/null 2>&1
 
-        && useradd -m -s /bin/bash Steam \
+RUN useradd -m server_admin
 
-        && usermod -aG sudo Steam \
+RUN echo "server_admin:$server-pass" | chpasswd
 
-        && echo "Steam:password" | chpasswd \
+WORKDIR /home/server_admin/
 
-USER Steam
+# COPY setup.sh /home/server_admin/
 
-ENV TERM=xterm
+COPY terraria-server-1423.zip /home/server_admin/
 
-WORKDIR /home/Steam/
+RUN unzip terraria-server-1423.zip \ 
 
-RUN wget https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-1423.zip?1621172068 > /dev/null \
+&& chown -R server_admin /home/server_admin/  \
 
-  && unzip terraria-server-1423.zip\?1621172068 > /dev/null \
-
-  && sudo chown -R Steam /home/Steam/  && chmod +x /home/Steam/1423/Linux/TerrariaServer.bin.x86*
-
-EXPOSE 7777
+&& chmod +x /home/server_admin/1423/Linux/TerrariaServer.bin.x86*
